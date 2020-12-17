@@ -1,0 +1,35 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+
+    <h1>Admin page</h1>
+
+    <h3>Users list</h3>
+
+        <ul>
+            {% for user in users %}
+                <li>{{ user.email }}</li>
+            {% endfor %}
+        </ul>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <th scope="row">1</th>
+            <td>{{ user.email }}</td>
+            <td>{{ user.roles | json_encode}}</td>
+            <td>Name</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
