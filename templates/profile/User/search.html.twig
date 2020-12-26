@@ -1,0 +1,27 @@
+{% extends 'profile/base.html.twig' %}
+
+{% block body %}
+
+    <h1>{{ title }}</h1>
+
+    <h5>Result</h5>
+        <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-3">
+            </div>
+            <div class="col-5 justify-content-right">
+                <ul>
+                    {% for profile_item in profile %}
+                        <li>{{ profile_item.name }}</li>
+                        <li>{{ profile_item.country }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
