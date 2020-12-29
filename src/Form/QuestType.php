@@ -18,13 +18,7 @@ class QuestType extends AbstractType
             ->add('language', LanguageType::class, array(
                 'label' => 'What language would you like to learn?',
                 'placeholder' => 'Select language',
-                'preferred_choices' => ['en', 'de', 'ru'],
-            ))
-            ->add('search', SubmitType::class, array(
-                'label' => 'Search',
-                'attr' => [
-                    'class' => 'btn btn-secondary btn-sm float-center mt-2',
-                ]
+                'preferred_choices' => ['en', 'de', 'ru', 'es', 'tr', 'fr', 'zh'],
             ))
         ;
     }

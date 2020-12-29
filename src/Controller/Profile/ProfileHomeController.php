@@ -5,10 +5,8 @@ namespace App\Controller\Profile;
 
 
 use App\Entity\Profile;
-use App\Entity\User;
 use App\Form\ProfileType;
 use App\Form\QuestType;
-use App\Form\UserType;
 use App\Repository\ProfileRepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,22 +31,9 @@ class ProfileHomeController extends ProfileBaseController
     {
         $email = $this->getUser()->getEmail();
         $profile = $this->getDoctrine()->getRepository(Profile::class)->findOneBy(['email' => $email]);
-
         if (!empty($profile)) {
             $form = $this -> createForm(QuestType::class);
             $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid())            //проверяем данные из формы
-            {
-                if ($form->get('search')->isClicked())
-                {
-                    $id = $request->get('quest');
-                    $language = $id['language'];
-                    $forRender = parent::renderDefault();
-                    $forRender['title'] = 'Search';
-                    $forRender['profile'] = $this->profileRepository->getSearchProfile($language);
-                    return $this->render('profile/User/search.html.twig', $forRender);
-                }
-            }
             $forRender = parent::renderDefault();
             $forRender['title'] = 'Your profile';
             $forRender['profile'] = $profile;
@@ -119,12 +104,11 @@ class ProfileHomeController extends ProfileBaseController
      */
     public function search(Request $request)
     {
-        $id = $request->get('quest');
+        $id = $request->get('id');
         $forRender = parent::renderDefault();
         $forRender['title'] = 'Search';
-        $forRender['task'] = $this->profileRepository->getSearchProfile($id);
-        return $this->render('profile/User/search.html.twig', $forRender);
-
+        $forRender['profile'] = $this->profileRepository->getSearchProfile($id);
+        return $this->render('profile/User/result.html.twig', $forRender);
     }
 
 }

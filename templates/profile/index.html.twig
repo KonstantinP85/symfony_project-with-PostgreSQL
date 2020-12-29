@@ -5,7 +5,7 @@
     <h1>{{ title }}</h1>
 
     <h5>Fill out my profile</h5>
-    <a href="{{ path('profile_create') }}" class="btn btn-outline-primary">Create</a>
+    <a href="{{ path('profile_create') }}" class="btn btn-outline-primary btn-sm">Create</a>
     <div class="container-fluid">
 
             <div class="row">
@@ -19,6 +19,9 @@
                 </div>
                 <div class="col">
                     {{ form(form) }}
+                    <div class="mt-5 mr-5">
+                        {% include 'profile/User/result.html.twig' %}
+                    </div>
                 </div>
             </div>
 

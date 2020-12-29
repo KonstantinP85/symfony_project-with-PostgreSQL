@@ -27,9 +27,9 @@ interface ProfileRepositoryInterface
     public function getOneProfile(string $email): object;
 
     /**
-     * @param string $language
+     * @param string $id
      * @return Profile[]
      */
-    public function getSearchProfile(string $language): array;
+    public function getSearchProfile(string $id): array;
 
 }

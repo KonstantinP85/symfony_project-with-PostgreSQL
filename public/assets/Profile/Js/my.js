@@ -1,20 +1,16 @@
-$(document).ready(function()
-{
-    search();
-})
-function search(){
+$(document).ready(function() {
+    $("#quest_language").change(function() {
+        var id = $("#quest_language option:selected").val();
 
-    $(document).on('click','#quest_search', function(){
-        var data = $("quest").serialize();
-        var id = $(this).attr('name');
         $.ajax(
             {
-                url: '',
+                url: 'http://localhost/newproject/myproject/public/profile/search',
                 method: 'POST',
                 dataType: 'html',
-                data: {id:id, data:data},
-
-
+                data: {id:id},
+                success: function(result){
+                    $('#result').html(result);
+                }
             })
     })
-}
+})

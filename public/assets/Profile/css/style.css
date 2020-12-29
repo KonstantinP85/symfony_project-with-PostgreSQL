@@ -1,0 +1,18 @@
+.btn{
+    text-align: center;
+    padding: 8px 10px;
+    border: solid 1px #777777;
+    color: #e72b2b;
+    background:#ffffff;
+    tansition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    text-transform: uppercase;
+}
+.btn:hover {                        /* кнопка при наведении */
+    color: #fff;
+    background: #333;
+    tansition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+}

@@ -42,10 +42,10 @@ class ProfileRepository extends ServiceEntityRepository implements ProfileReposi
         return parent::find($email);
     }
 
-    public function getSearchProfile(string $language): array
+    public function getSearchProfile(string $id): array
     {
         return parent::findBy(
-            ['language' => "$language"],
+            ['language' => "$id"],
             ['id' => 'ASC']);
     }
 
