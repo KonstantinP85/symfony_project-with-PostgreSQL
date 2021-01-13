@@ -8,6 +8,7 @@ use App\Entity\Profile;
 use App\Form\ProfileType;
 use App\Form\QuestType;
 use App\Repository\ProfileRepositoryInterface;
+use App\Services\FileServiceInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,9 +49,10 @@ class ProfileHomeController extends ProfileBaseController
     /**
      * @Route ("profile/create", name="profile_create")
      * @param Request $request
+     * @param FileServiceInterface $fileService
      * @return RedirectResponse|Response
      */
-    public function create(Request $request)
+    public function create(Request $request, FileServiceInterface $fileService)
     {
         $profile = new Profile();
         $email = $this->getUser()->getEmail();
@@ -58,6 +60,11 @@ class ProfileHomeController extends ProfileBaseController
         $form->handleRequest($request);                          //принимаем данные из формы
         if ($form->isSubmitted() && $form->isValid())            //проверяем данные из формы
         {
+            $image = $form->get('image')->getData();
+            if ($image){
+                $filename = $fileService->imageUpload($image);
+                $profile->setImage($filename);
+            }
             $profile->setEmail($email);
             $this->profileRepository->setCreateProfile($profile);
             //  $this->addFlash('success', 'Profile was created!');
@@ -73,9 +80,10 @@ class ProfileHomeController extends ProfileBaseController
      * @Route ("profile/update", name="profile_update")
      *
      * @param Request $request
+     * @param FileServiceInterface $fileService
      * @return RedirectResponse|Response
      */
-    public function update(Request $request)
+    public function update(Request $request, FileServiceInterface $fileService)
     {
         $email = $this->getUser()->getEmail();
         $profile = $this->getDoctrine()->getRepository(Profile::class)->findOneBy(['email' => $email]);
@@ -86,8 +94,17 @@ class ProfileHomeController extends ProfileBaseController
         {
             if ($form->get('save')->isClicked())
             {
+                $image = $form->get('image')->getData();
+                $image_old = $profile->getImage();
+                if ($image){
+                    if ($image_old) {
+                        $fileService->imageRemove($image_old);
+                    }
+                    $filename = $fileService->imageUpload($image);
+                    $profile->setImage($filename);
+                }
                 $this->profileRepository->setUpdateProfile($profile);
-                //$this->addFlash('success', 'Task was updated!');
+                //$this->addFlash('success', 'Profile was updated!');
             }
             return $this->redirectToRoute('profile');
         }
