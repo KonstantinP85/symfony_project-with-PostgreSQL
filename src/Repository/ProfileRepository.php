@@ -23,11 +23,10 @@ class ProfileRepository extends ServiceEntityRepository implements ProfileReposi
         parent::__construct($registry, Profile::class);
     }
 
-
     public function setCreateProfile(Profile $profile): object
     {
-        $this->manager->persist($profile);   //фокусируемся
-        $this->manager->flush();             //добавляем
+        $this->manager->persist($profile);
+        $this->manager->flush();
         return $profile;
     }
 
@@ -48,33 +47,4 @@ class ProfileRepository extends ServiceEntityRepository implements ProfileReposi
             ['language' => "$id"],
             ['id' => 'ASC']);
     }
-
-    // /**
-    //  * @return Profile[] Returns an array of Profile objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Profile
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

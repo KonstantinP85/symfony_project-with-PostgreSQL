@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -19,5 +17,4 @@ interface FileServiceInterface
      * @return mixed
      */
     public function imageRemove(string $filename);
-
 }

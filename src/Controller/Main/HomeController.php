@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller\Main;
 
 use App\Entity\User;
@@ -11,15 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-
 class HomeController extends BaseController
 {
     /**
      * @Route ("/", name="home_page")
      */
-    public function index()
+    public function index(): Response
     {
         $forRender = parent::renderDefault();
+
         return $this->render('main/index.html.twig', $forRender);
     }
 
@@ -36,8 +35,7 @@ class HomeController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $form->handleRequest($request);
 
-        if(($form->isSubmitted()) && ($form->isValid()))
-        {
+        if(($form->isSubmitted()) && ($form->isValid())) {
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->setRoles(["ROLE_USER"]);
@@ -46,14 +44,10 @@ class HomeController extends BaseController
 
             return $this->redirectToRoute('home_page');
         }
-
         $forRender = parent::renderDefault();
         $forRender['title'] = 'Registration';
         $forRender['form'] = $form->createView();
+
         return $this->render('main/form.html.twig', $forRender);
     }
-
-
-
-
 }

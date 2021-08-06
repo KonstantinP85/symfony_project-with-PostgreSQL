@@ -31,5 +31,4 @@ interface ProfileRepositoryInterface
      * @return Profile[]
      */
     public function getSearchProfile(string $id): array;
-
 }

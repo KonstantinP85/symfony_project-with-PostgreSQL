@@ -47,16 +47,25 @@ class Profile
      */
     private $Country;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->Name;
     }
 
+    /**
+     * @param string $Name
+     */
     public function setName(string $Name): self
     {
         $this->Name = $Name;
@@ -64,11 +73,17 @@ class Profile
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -76,11 +91,17 @@ class Profile
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getLanguage(): ?string
     {
         return $this->language;
     }
 
+    /**
+     * @param string $language
+     */
     public function setLanguage(string $language): self
     {
         $this->language = $language;
@@ -88,11 +109,17 @@ class Profile
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getImage(): ?string
     {
         return $this->image;
     }
 
+    /**
+     * @param string|null $image
+     */
     public function setImage(?string $image): self
     {
         $this->image = $image;
@@ -100,11 +127,17 @@ class Profile
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getIsPublic(): ?bool
     {
         return $this->is_public;
     }
 
+    /**
+     * @param bool $is_public
+     */
     public function setIsPublic(bool $is_public): self
     {
         $this->is_public = $is_public;
@@ -112,11 +145,17 @@ class Profile
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCountry(): ?string
     {
         return $this->Country;
     }
 
+    /**
+     * @param string $Country
+     */
     public function setCountry(string $Country): self
     {
         $this->Country = $Country;

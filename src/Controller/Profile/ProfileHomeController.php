@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Controller\Profile;
-
 
 use App\Entity\Profile;
 use App\Form\ProfileType;
@@ -18,6 +16,9 @@ class ProfileHomeController extends ProfileBaseController
 {
     private $profileRepository;
 
+    /**
+     * @param ProfileRepositoryInterface $profileRepository
+     */
     public function __construct(ProfileRepositoryInterface $profileRepository)
     {
         $this->profileRepository = $profileRepository;
@@ -28,7 +29,7 @@ class ProfileHomeController extends ProfileBaseController
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $email = $this->getUser()->getEmail();
         $profile = $this->getDoctrine()->getRepository(Profile::class)->findOneBy(['email' => $email]);
@@ -39,6 +40,7 @@ class ProfileHomeController extends ProfileBaseController
             $forRender['title'] = 'Your profile';
             $forRender['profile'] = $profile;
             $forRender['form'] = $form->createView();
+
             return $this->render('profile/index.html.twig', $forRender);
         }
         else {
@@ -57,28 +59,27 @@ class ProfileHomeController extends ProfileBaseController
         $profile = new Profile();
         $email = $this->getUser()->getEmail();
         $form = $this -> createForm(ProfileType::class, $profile);
-        $form->handleRequest($request);                          //принимаем данные из формы
-        if ($form->isSubmitted() && $form->isValid())            //проверяем данные из формы
-        {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $image = $form->get('image')->getData();
-            if ($image){
+            if ($image) {
                 $filename = $fileService->imageUpload($image);
                 $profile->setImage($filename);
             }
             $profile->setEmail($email);
             $this->profileRepository->setCreateProfile($profile);
-            //  $this->addFlash('success', 'Profile was created!');
+
             return $this->redirectToRoute('profile');
         }
         $forRender = parent::renderDefault();
         $forRender['title'] = 'Create profile';
         $forRender['form'] = $form->createView();
+
         return $this->render('profile/User/form.html.twig', $forRender);
     }
 
     /**
      * @Route ("profile/update", name="profile_update")
-     *
      * @param Request $request
      * @param FileServiceInterface $fileService
      * @return RedirectResponse|Response
@@ -90,13 +91,11 @@ class ProfileHomeController extends ProfileBaseController
         $form = $this -> createForm(ProfileType::class, $profile);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())            //проверяем данные из формы
-        {
-            if ($form->get('save')->isClicked())
-            {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('save')->isClicked()) {
                 $image = $form->get('image')->getData();
                 $image_old = $profile->getImage();
-                if ($image){
+                if ($image) {
                     if ($image_old) {
                         $fileService->imageRemove($image_old);
                     }
@@ -104,13 +103,13 @@ class ProfileHomeController extends ProfileBaseController
                     $profile->setImage($filename);
                 }
                 $this->profileRepository->setUpdateProfile($profile);
-                //$this->addFlash('success', 'Profile was updated!');
             }
             return $this->redirectToRoute('profile');
         }
         $forRender = parent::renderDefault();
         $forRender['title'] = 'Update profile';
         $forRender['form'] = $form->createView();
+
         return $this->render('profile/User/form.html.twig', $forRender);
     }
 
@@ -119,13 +118,13 @@ class ProfileHomeController extends ProfileBaseController
      * @param Request $request
      * @return Response
      */
-    public function search(Request $request)
+    public function search(Request $request): Response
     {
         $id = $request->get('id');
         $forRender = parent::renderDefault();
         $forRender['title'] = 'Search';
         $forRender['profile'] = $this->profileRepository->getSearchProfile($id);
+
         return $this->render('profile/User/result.html.twig', $forRender);
     }
-
 }
